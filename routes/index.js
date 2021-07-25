@@ -5,6 +5,9 @@ const router=express.Router();
 
 const homeController=require('../controllers/home_controller');
 
+
 router.get('/',homeController.home);
-// router.get('/',homeController.actionName);
+router.use('/users',require('./users'));
+router.use('/payments',require('./payments'));
+router.use('/posts',require('./posts'));
 module.exports=router;
