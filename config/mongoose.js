@@ -6,3 +6,5 @@ mongoose.connect('mongodb://localhost/codeial_development',{ useUnifiedTopology:
 
 const db=mongoose.connection;
 
+
+module.exports=db;
