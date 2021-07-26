@@ -11,12 +11,19 @@ const app= express();
 const port =8080;
 const expressLayouts=require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
-
+const sassMiddleware=require('node-sass-middleware');
 app.use(expressLayouts);
 //teeling browser to extract style and scripts from sub pages body into the layout
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
 
 app.use(express.static('./assets'))
 app.use(express.urlencoded());
