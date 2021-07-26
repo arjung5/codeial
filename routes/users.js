@@ -11,6 +11,11 @@ router.get('/',(req,res)=>{
 
 
 router.get('/profile',usersController.profile);
-router.get('/friendList',usersController.userfriend);
 
+
+//Action for Sign Up
+router.get('/sign-up',usersController.signup);
+router.post('/sign-up',usersController.register);
+router.get('/sign-in',usersController.signIn);
+router.post('/create-session',usersController.createSession);
 module.exports=router;

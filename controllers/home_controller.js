@@ -1,4 +1,7 @@
-module.exports.home=(req,res)=>  {return res.render('home',{
+module.exports.home=(req,res)=>  {
+    console.log(req.cookies); 
+    res.cookie('userId',25);
+    return res.render('home',{
     title:"Home"
 })}
 
