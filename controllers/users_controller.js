@@ -54,18 +54,23 @@ module.exports.signIn=(req,res)=>{
 
 //Sign in and create a session for a User
 module.exports.createSession=(req,res)=>{
-    if(req.body)
-    {
-        User.find({email:req.body.email},(err,data)=>{
-            if(err){
-                  alert('some error occured , please try again');
-                  return res.redirect('/create-session');
-                }
-            else{
-                console.log(data);
-                res.redirect('/');
-            }
-        })
-    }
+    // if(req.body)
+    // {
+    //     User.find({email:req.body.email},(err,data)=>{
+    //         if(err){
+    //               alert('some error occured , please try again');
+    //               return res.redirect('/create-session');
+    //             }
+    //         else{
+    //             console.log(data);
+    //             res.redirect('/');
+    //         }
+    //     })
+    // }
+    return res.redirect('/');
 };
 
+module.exports.destroySession=(req,res)=>{
+    req.logout();
+    return res.redirect('/');
+};

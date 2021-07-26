@@ -1,6 +1,12 @@
 const express=require('express');
 
 const db=require('./config/mongoose');
+
+//Used for session cookie
+const session =require('express-session');
+const passport=require('passport');
+const passportLocal=require('./config/passport-local-strategy');
+
 const app= express();
 const port =8080;
 const expressLayouts=require('express-ejs-layouts');
@@ -16,11 +22,43 @@ app.use(express.static('./assets'))
 app.use(express.urlencoded());
 app.use(cookieParser());
 //use express router
-app.use('/',require('./routes'));
 
 //set up the view engine
 app.set('view engine','ejs');
 app.set('views','./views');
+
+// monog store is used to store the session cookie in the db
+
+
+const MongoStore = require('connect-mongo');
+app.use(session({
+    name:'codeial',
+    //ToDo change the secret before deployemnt in production mode
+    secret:'arjungarg',
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge:(1000*60*60)
+    },
+    store:MongoStore.create(
+        {
+        // mongooseConnection:db,
+        mongoUrl: 'mongodb://localhost/codeial_development',
+        autoRemove:'disabled'
+        },
+        function(err)
+        {
+        console.log(err || 'connect mongodb setup pk');
+        }
+    )
+
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
+app.use('/',require('./routes'));
+
 
 app.listen(port,(err)=>{
     if(err) console.log(`Error occured at creating the server ${err}`)
