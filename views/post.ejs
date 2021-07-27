@@ -5,3 +5,27 @@
        <input placeholder="Type Here......" type="submit" value="Post"/>
     </form>
 </section>
+<% for(let i of content_list) {%>
+    <h5><%= i.user.name %> : <%= i.content %></h5>
+    
+    <form action="/comment/create" method="POST">
+        <label for="content">Type Comment</label>
+        <input name="content" placeholder="Type Here......" type="text"/>
+       <input type="hidden" name="postId" value=<%= i._id %> />
+       <button type="submit">Post Comment</button>
+    </form>
+    <ul>
+        <li>
+            <% for(comment of i.comments ) {%>
+            <p>
+                <%= comment.content %>
+                <br>
+                <small>
+                    <%= comment.user.name %>
+                </small>
+            </p>
+            <% } %>
+        </li>
+    </ul>
+<%}%>
+
