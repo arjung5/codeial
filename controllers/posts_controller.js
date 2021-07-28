@@ -89,7 +89,3 @@ module.exports.destroy=(req,res)=>{
         }
     })
 }
-module.exports.posts=(req,res)=>{
-    return res.end('<p>This is the posts controller</p>');
-}
-
