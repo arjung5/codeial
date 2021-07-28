@@ -1,18 +1,22 @@
+<link rel="stylesheet" href="/css/header.css"/>
 <header>
-    Page Header
-    <ul>
-        <% if(locals.user) {%>
-            <l1><a href="/users/profile"><%= user.name %></a></l1>
-            <l1>
+    <div class="header">
+        <a href="#default" class="logo">CompanyLogo</a>
+        <div class="header-right">
+            <% if(locals.user) {%>
+                <a class="active" href="/users/profile"><%= user.name %></a>
                 <a href="/users/sign-out">Sign Out</a>
-            </l1>
-        <%} else {%>
-            <l1>
-                <a href="/users/sign-in">Sign In</a>
-            </l1>
-            <l1>
+                <a href="/posts">Posts</a>
+            <%} else {%>
+                <a class="active" href="/users/sign-in">Sign In</a>
                 <a href="/users/sign-up">Sign Up</a>
-            </l1>
-        <%}%>
-    </ul>
+            <%}%>
+          <a href="/">Home</a>
+        </div>
+      </div>
+      <!-- <div style="padding-left:20px">
+        <h1>Responsive Header</h1>
+        <p>Resize the browser window to see the effect.</p>
+        <p>Some content..</p>
+      </div> -->
 </header>

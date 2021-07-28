@@ -33,7 +33,7 @@ module.exports.register=(req,res)=>{
                 if(!user){
                     User.create(req.body,(err,data)=>{
                         if(err) return console.log(`Error inadding data to database ${err}`);
-                        console.log(`*************************${data}`);
+                        //console.log(`*************************${data}`);
                         res.redirect('/users/sign-in');
                     })
                 }

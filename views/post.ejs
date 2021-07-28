@@ -1,31 +1,47 @@
 <section>
-    <h4>Posts</h4>
+    <h2>Posts</h4>
     <form action="/posts/create" method="POST">
-        <textarea name="content" cols="30" rows="3"></textarea>
+        <textarea name="content" cols="60" rows="3"></textarea>
        <input placeholder="Type Here......" type="submit" value="Post"/>
     </form>
 </section>
 <% for(let i of content_list) {%>
-    <h5><%= i.user.name %> : <%= i.content %></h5>
-    
-    <form action="/comment/create" method="POST">
-        <label for="content">Type Comment</label>
-        <input name="content" placeholder="Type Here......" type="text"/>
-       <input type="hidden" name="postId" value=<%= i._id %> />
-       <button type="submit">Post Comment</button>
-    </form>
-    <ul>
-        <li>
-            <% for(comment of i.comments ) {%>
-            <p>
-                <%= comment.content %>
-                <br>
-                <small>
-                    <%= comment.user.name %>
-                </small>
-            </p>
-            <% } %>
-        </li>
-    </ul>
+    <p style="margin:0">
+    <h3 style="margin: 0;"><%= i.content %>   <% if(i.user.id == locals.user.id) { %>
+        <small style="margin:0"> 
+            <a href="/posts/destroys/<%= postId=i.id %>">x</a>
+        </small>
+    <% } %></h3>
+    <%= i.user.name %>
+  
+    </p>
+    <div>
+        <form action="/comment/create" method="POST">
+            <input name="content" placeholder="Type Here......" type="text"/>
+           <input type="hidden" name="postId" value=<%= i._id %> />
+           <button style="background-color: #4CAF50; border: none;" type="submit">comment</button>
+        </form>
+        <ul>
+                <% for(comment of i.comments ) {%>
+                <p>
+                <li>
+                    <h5 style="margin: 0;padding: 0;">
+                        <%= comment.content %> 
+                        <% if(comment.user.id == locals.user.id) { %>
+                        <small style="margin:0"> 
+                            <a href="/comment/destroys/<%= commentId=comment.id %>">x</a>
+                        </small>
+                    <% } %>
+                    </h5>
+                    <br>
+                    <small>
+                        <%= comment.user.name %>
+                    </small>
+                </li>
+                </p>
+                <% } %>
+            
+        </ul>
+    </div>
 <%}%>
 

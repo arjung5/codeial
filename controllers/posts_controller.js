@@ -1,5 +1,6 @@
 const Post=require('../models/post');
-const comments=require('../models/comment');
+const Comment=require('../models/comment');
+
 module.exports.posts=(req,res)=>{
     Post.find({}).populate('user').populate({
         path:'comments',
@@ -9,13 +10,13 @@ module.exports.posts=(req,res)=>{
     }).exec((err,posts)=>{
         if(err)
         {
-            console.log('Hey there');
+            //console.log('Hey there');
             return;   
         }
         for(let value of posts)
         {
 
-            comments.find({'_id':value.comments},(err,data)=>{
+            Comment.find({'_id':value.comments},(err,data)=>{
                 if(err)
                 {
                     console.log(`This is an error occured at fetching comment from a post ${err}`);
@@ -42,7 +43,7 @@ module.exports.posts=(req,res)=>{
 module.exports.CreatePost=(req,res)=>{
     if(req.isAuthenticated())
     {
-        console.log(`This is the req is for the logged user that is:= ${req.user.id}`)
+        //console.log(`This is the req is for the logged user that is:= ${req.user.id}`)
         Post.create({
             content:req.body.content,
             user:req.user.id
@@ -62,4 +63,28 @@ module.exports.CreatePost=(req,res)=>{
 }
 
 
-
+module.exports.destroy=(req,res)=>{
+    //console.log('Entered in destroy actions');
+    Post.findById(req.params.postId,(err,success)=>{
+        if(err)
+        {
+            console.log(`here is the error about the ${err}`)
+            return;
+        }
+        //.id means c 
+        if(success.user==req.user.id)
+        {
+           success.remove();
+           //console.log(`here is desired post ${success}`);
+           Comment.deleteMany({post:req.params.id},(err)=>{
+               if(err)
+               {
+                   console.log(`${err}`)
+                   return;
+               }
+               //console.log(`here is comment delete ${success}`);
+               return res.redirect('back');
+           })
+        }
+    })
+}
