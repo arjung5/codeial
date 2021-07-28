@@ -14,9 +14,24 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    createdAt:{
-
-    }
+    requestReceived:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+       }
+    ],
+    requestSend:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+       }
+    ],
+    friendsList:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+       }
+    ]
 },{
     timestamps:true
 });

@@ -10,13 +10,15 @@ router.get('/',(req,res)=>{
 
 
 
-router.get('/profile',passport.checkAuthentication,usersController.profile);
+router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
 
-
+router.post('/profile/update',usersController.updateUser);
 //Action for Sign Up
 router.get('/sign-up',passport.checkAuthenticationSkip,usersController.signup);
 router.post('/sign-up',usersController.register);
 router.get('/sign-in',passport.checkAuthenticationSkip,usersController.signIn);
+
+router.get('/addfriend/:id',usersController.addFriend);
 
 //Use passport as a middlware to authenticate
 router.post('/create-session',passport.authenticate('local',{failureRedirect:'/users/sign-in'},),usersController.createSession,);

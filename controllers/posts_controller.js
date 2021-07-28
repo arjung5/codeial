@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Post=require('../models/post');
 const Comment=require('../models/comment');
 
@@ -88,3 +89,9 @@ module.exports.destroy=(req,res)=>{
         }
     })
 }
+=======
+module.exports.posts=(req,res)=>{
+    return res.end('<p>This is the posts controller</p>');
+}
+
+>>>>>>> parent of 28505f0 (added post page and added to db)

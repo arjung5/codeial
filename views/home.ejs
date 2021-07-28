@@ -1,3 +1,70 @@
+<link rel="stylesheet" href="/css/home.css"/>
 
-    <h1>Codeial <%= title %></h1>
-    
+<div id="home-header">
+    <div id="home-post-comment">
+           PLease Sing In
+    </div>
+    <div id="home-friends">
+        <h4>Friends List</h4>
+        <ul>
+            <% if(locals.user) { %>
+                <%= data_currentUser.requestSend %>
+             <hr>
+
+             <% for(let userInfo of users_list) { %>
+                 <% if(userInfo.id==locals.user.id) {%>
+                    <% continue %>
+                 <% } %>
+              
+                 <% for(let userInfom of data_currentUser.requestSend) {%>
+                    <%= userInfom.id  %>
+                    <p>*************</p>
+                    <%= userInfo.id  %>
+                    <p>#############</p>
+                    <% if(userInfom.id==userInfo.id) {%>
+                        <% continue %>
+                        <% locals.flag=true %>
+                     <% } %>
+                 <% } %>
+                 
+                 <%= locals.flag %>
+                 <% if(locals.flag) {%>
+                    <% locals.flag=false %>
+                    <% continue %>
+                 <% } %>
+                 <%= userInfo.name %>
+                 <a href="/users/profile/<%= userInfo.id %>">Profile</a>
+                 <a href="/users/addfriend/<%= userInfo.id %>"><button>Add Friend +</button></a>
+                 <hr>
+             <% } %>
+             <div>
+                <% for(let userInfo of data_currentUser.requestSend) { %>                
+                    <%= userInfo.name %>
+                    <a href="/users/profile/<%= userInfo.id %>">Profile</a>
+                    Requested
+                    <hr>
+                <% } %>    
+             </div>
+            <div>
+                <% for(let userInfo of data_currentUser.requestReceived) { %>                
+                    <%= userInfo.name %>
+                    <a href="/users/profile/<%= userInfo.id %>">Profile</a>
+                    <a href="/users/acceptrequest/<%= userInfo.id %>"><button>Accept Request</button></a>
+                    <hr>
+                <% } %>    
+            </div>
+           <div>
+            <% for(let userInfo of data_currentUser.friendsList) { %>                
+                <%= userInfo.name %>
+                <a href="/users/profile/<%= userInfo.id %>">Profile</a>
+                <hr>
+            <% } %>    
+           </div>
+          
+             
+            <% } %>
+          
+             
+         </ul>
+    </div>
+</div>

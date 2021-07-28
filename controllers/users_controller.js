@@ -1,8 +1,14 @@
 const User=require('../models/user');
 
 module.exports.profile=(req,res)=>{
-    return res.render('user_profile',{
-        title:"User Profile Page"
+
+
+    User.findById(req.params.id,(err,data)=>{
+        
+        return res.render('user_profile',{
+                 title:"User Profile Page",
+                 profile_user:data
+             })
     })
 };
 
@@ -74,3 +80,52 @@ module.exports.destroySession=(req,res)=>{
     req.logout();
     return res.redirect('/');
 };
+
+module.exports.updateUser=(req,res)=>{
+   // console.log(req.body);
+    if(req.isAuthenticated() && req.body.id==req.user.id)
+    {
+       // console.log('entered in the function');
+        User.findByIdAndUpdate(req.body.id,{$set:{email:req.body.email,name:req.body.name}},(err,sucess)=>{
+            if(err)
+            {
+                console.log(err);
+                return ;
+            }
+            return res.redirect('back');
+        })
+    }
+    else
+    {
+        return res.redirec('back');
+    }
+}
+
+module.exports.addFriend=(req,res)=>{
+  //  console.log('Enters in AddFriend')
+    if(req.isAuthenticated())
+    {
+        User.findByIdAndUpdate(req.user.id,{$push:{requestSend:req.params.id}},(err,data)=>{
+            if(err)
+            {
+                console.log(err);
+                return;
+            }
+            if(data)
+            {
+                User.findByIdAndUpdate(req.params.id,{$push:{requestReceived:req.user.id}},(err,dataRecei)=>{
+                    if(err)
+                    {
+                        console.log(err);
+                        return;
+                    }
+                    return res.redirect('back');
+                })
+            }
+            else
+            {
+                return res.redirect('back');
+            }
+        })
+    }
+}
