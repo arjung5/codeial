@@ -47,3 +47,15 @@ module.exports.home=(req,res)=>  {
  }
 
 // module.exports.actionName=(req,res)=>{return res.end('<h1>This is the actionName</h1>')}
+
+
+
+
+
+
+
+
+
+
+
+
